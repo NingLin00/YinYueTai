@@ -74,7 +74,7 @@
 		return a;
 		};
 	//内容s滑动
-	w.contentMove = function (navWrap,how) {
+	w.contentMove = function (navWrap,how,callback) {
         var navList = navWrap.firstElementChild;
         var eleStart = 0;
         var mouseStart = 0;
@@ -114,6 +114,9 @@
             startX = touch.clientX;
             startY = touch.clientY;
             isfirst = true;
+            if(callback && typeof callback['start'] == 'function'){
+                callback['start']();
+            }
             clearInterval(timer)
         });
         navWrap.addEventListener('touchmove',function(event){
@@ -137,11 +140,16 @@
             var lastDis = eleStart + dis;
 
             //限制大小
-            //临界值
-            maxDis = how?document.documentElement.clientWidth-navList.offsetWidth:document.documentElement.clientHeight-navList.offsetHeight;
-			//视口的宽或高
+            //视口的宽或高
             var viewDis = how?document.documentElement.clientWidth:document.documentElement.clientHeight;
-
+			//bug修正 必要时要移除
+            var sblings = allSibling(navList.parentNode);
+            var height = 0;
+            sblings.forEach(function (item) {
+                height += item.offsetHeight;
+            });
+            //临界值
+            maxDis = how?viewDis-navList.offsetWidth:viewDis-navList.offsetHeight - height;
             // 阻尼系数;
             if (lastDis > 0) {
                 var scale = 0.6 - lastDis/(3*viewDis);
@@ -154,6 +162,9 @@
             }
 
             how?transformCss(navList,'translateX',lastDis):transformCss(navList,'translateY',lastDis);
+            if(callback && typeof callback['move'] == 'function'){
+                callback['move']();
+            }
         });
         navWrap.addEventListener('touchend',function () {
 
@@ -193,7 +204,9 @@
                 },20)
 
             }
-
+            if(callback && typeof callback['end'] == 'function'){
+                callback['end']();
+            }
 
 
             //回弹

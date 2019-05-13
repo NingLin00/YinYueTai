@@ -130,7 +130,7 @@ body {
         position: relative;
         width: 100%;
         height: 100%;
-        padding-top: 255/@rem;
+        margin-top: 255/@rem;
         box-sizing: border-box;
         overflow: hidden;
         .content{
@@ -258,16 +258,24 @@ body {
                     }
                 }
             }
+            .footer{
+                background-color: #ffffff;
+                padding: 1rem 0.5rem;
+                margin-top: 0.3rem;
+                font-size: .6rem;
+                color: #666666;
+                text-align: center;
+            }
         }
         .scrollBar{
             position: absolute;
             right: 0;
             top: 0;
             width: 5px;
-            height: 100px;
             background-color: #7f7f7f;
             border-radius: 3px;
-            opacity: 1;
+            opacity: 0;
+            transition: opacity 1s;
         }
 
     }

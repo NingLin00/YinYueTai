@@ -428,6 +428,9 @@
 							</div>
 						</div>
 					</div>
+					<div class="footer">
+						Copyright &copy; 2016 yinyuetai.com
+					</div>
 				</div>
 				<div class='scrollBar'></div>
 			</div>
@@ -648,7 +651,6 @@
                         var lastX = disX + eleStart;
                         transformCss(videoContent,'translateX',lastX);
                         if (Math.abs(disX) > width / 2) {
-							console.log(disX)
                             if (disX > 0) {
                                 lastX = 0;
 							}else {
@@ -672,9 +674,39 @@
             //整体内容区域竖向滑屏
 			mainMove();
 			function mainMove() {
-			    var contentWrap = document.querySelector('.wrap .content_wrap');
-			    contentMove(contentWrap,'false')
-            }
+                var contentWrap = document.querySelector('.wrap .content_wrap');
+                var content = document.querySelector('.wrap .content_wrap .content');
+
+				var scrollBar = document.querySelector('.wrap .content_wrap .scrollBar');
+
+			    //布局bug deal，只针对这个项目
+			    var heightLength = 0;
+			    allSibling(contentWrap).forEach(function (item) {
+					heightLength += item.offsetHeight
+                });
+				var contentView = document.documentElement.clientHeight - heightLength;
+				var scale = contentView / content.offsetHeight;
+				//
+                scrollBar.style.height = scale * contentView + 'px'
+
+                var callback = {
+                    start:function(){
+                        scrollBar.style.opacity = 1;
+                    },
+
+                    move:function(){
+                        scrollBar.style.opacity = 1;
+                        //跟随内容的移动往相反的方向移动
+                        var lastY = transformCss(content,'translateY');
+                        transformCss(scrollBar,'translateY',-scale * lastY);
+                    },
+
+                    end:function(){
+                        scrollBar.style.opacity = 0;
+                    }
+                }
+                contentMove(contentWrap,'false',callback)
+			}
 		}
 	</script>
 </html>
