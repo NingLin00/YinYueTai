@@ -458,16 +458,22 @@
 					
 				})
 			});
-			
-			// nav导航条移动
+
             navMove();
+            changActive();
+            setBannerWidth();
+            bannerMove();
+            tabMove();
+            mainMove();
+        };
+			// nav导航条移动
+
 			function navMove(){
 			    var navWrap = document.querySelector('.wrap .navWrap');
                 contentMove(navWrap,'true');
 			}
 
             //nav导航点击
-			changActive();
             function changActive() {
 				var navListItem = document.querySelectorAll('.wrap .navWrap .navList li');
                 var isMove = false;
@@ -490,7 +496,6 @@
             }
 
             //动态设定轮播图的宽
-			setBannerWidth();
             function setBannerWidth() {
 				var bannerList = document.querySelector('.wrap .content_wrap .content .banner_wrap .banner_list');
                 //无缝滑屏
@@ -503,7 +508,6 @@
             }
 
             //轮播图
-			//bannerMove();
             function bannerMove() {
 				var eleX = 0;
 				var startX = 0;
@@ -604,7 +608,6 @@
                 }
             }
             //tab滑屏逻辑
-            tabMove();
 			function tabMove() {
 				var videoWarp = document.querySelectorAll('.wrap .content_wrap .content .mvBox .videoWrap');
                 var videoContent = document.querySelectorAll('.wrap .content_wrap .content .mvBox .videoWrap .videoContent');
@@ -672,7 +675,6 @@
                 }
             }
             //整体内容区域竖向滑屏
-			mainMove();
 			function mainMove() {
                 var contentWrap = document.querySelector('.wrap .content_wrap');
                 var content = document.querySelector('.wrap .content_wrap .content');
@@ -707,6 +709,6 @@
                 }
                 contentMove(contentWrap,'false',callback)
 			}
-		}
+
 	</script>
 </html>
